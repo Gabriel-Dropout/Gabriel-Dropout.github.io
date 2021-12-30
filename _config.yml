@@ -1,7 +1,7 @@
 # ----------- CONFIGURABLE START -----------
 title:            "Gabriel's Blog"
 description:      "Test Blog."
-url:              http://gabriel-dropout.github.io # Site url, without a slash at the end.
+url:              https://gabriel-dropout.github.io # Site url, without a slash at the end.
 signoff:          "Gabriel-Dropout" # Your name
 facebook_appid:   # APP ID for like button, remove from /_includes/share.html if unwanted.
 google_analytics: # Set tracking, remove from /javascripts/basic.js if unwanted.
