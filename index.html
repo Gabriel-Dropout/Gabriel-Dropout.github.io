@@ -3,11 +3,83 @@
 
 <ul class="list pa0">
   {% for post in site.posts %}
-  <li class="mv2">
-    <a href="{{ site.url }}{{ post.url }}" class="db pv1 link blue hover-mid-gray">
+  <li class="mv2"
+    {% if post.tags %}
+      {% for tag in post.tags %}
+        data-{{ tag }}
+      {% endfor %}
+    {% endif %}
+  >
+    <span href="{{ site.url }}{{ post.url }}" class="db pv1 link blue hover-mid-gray" style="cursor: pointer;">
       <time class="fr silver ttu">{{ post.date | date_to_string }} </time>
+
+      <!--포스트 목록 내부 태그-->
+      <!--click Method로 post filtering-->
+      {% if post.tags %}
+        {% for tag in post.tags %}
+          <span data-tag="{{ tag }}" class="fr link blue hover-mid-gray mh2" href="/?tag={{ tag }}">
+            #{{ tag }}
+          </span>
+        {% endfor %}
+      {% endif %}
+
       {{ post.title }}
-    </a>
+    </span>
   </li>
   {% endfor %}
 </ul>
+
+<script>
+  //Move to post
+  $(".mv2").click((e) => {
+    var element = $(e.target);
+    console.log(element.attr("href"));
+    href = element.attr("href");
+    location.href = href;
+  })
+
+  //Tag filtering
+  $("[data-tag]").click((e) => {
+    currentTag = e.target.dataset.tag;
+    filterByTagName(currentTag);
+    updateQueryString(currentTag);
+  })
+  
+  //쿼리 파라미터
+  $(document).ready(function() {
+    let currentTag = "";
+    const queryTag = getQuery().tag;
+    if (queryTag) {
+      currentTag = queryTag;
+      filterByTagName(currentTag);
+    }
+  });
+  
+  //필터링 함수
+  function filterByTagName(tagName) {
+    $('.mv2').show();
+    $('.mv2').each((index, elem) => {
+      console.log(index);
+      if (!elem.hasAttribute(`data-${tagName}`)) {
+        $(elem).hide();
+      }
+    });
+  }
+  
+  //사용자 쿼리 수정
+  function updateQueryString(tagName) {
+    const path = `${location.protocol}//${location.host}${location.pathname}?tag=${tagName}`;
+    window.history.replaceState({ path }, '', path);
+  }
+
+  //String to JSON
+  function getQuery() {     
+    var params = {};  
+    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
+    	function(str, key, value) { 
+        params[key] = value; 
+      }
+    );
+    return params; 
+  }
+</script>
