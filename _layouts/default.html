@@ -62,7 +62,19 @@
         </div>
         {% if is_post %}{% include signoff.html %}{% endif %}
       </main>
-      {% if is_post %}{% include pagination.html %}{% endif %}
+      {% if is_post %}
+        <!--게시글 이동-->
+        {% include pagination.html %}
+        <!--댓글-->
+        <script src="https://utteranc.es/client.js"
+          repo="Gabriel-Dropout/Gabriel-Dropout.github.io"
+          issue-term="pathname"
+          label="comments"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+        </script>
+      {% endif %}
     </div>
     <footer class="mw7 center tc pt3 pb4 silver">
       Built with Jekyll using <a href="http://github.com/muan/scribble" class="link silver hover-blue pv1">Scribble</a>.
