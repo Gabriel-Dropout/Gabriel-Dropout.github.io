@@ -32,18 +32,18 @@
 <script>
   //Move to post
   $(".mv2").click((e) => {
+    if(e.target.dataset.hasOwnProperty('tag')){return;}
     var element = $(e.target);
-    console.log(element.attr("href"));
     href = element.attr("href");
     location.href = href;
-  })
+  });
 
   //Tag filtering
   $("[data-tag]").click((e) => {
     currentTag = e.target.dataset.tag;
     filterByTagName(currentTag);
     updateQueryString(currentTag);
-  })
+  });
   
   //쿼리 파라미터
   $(document).ready(function() {
@@ -59,7 +59,6 @@
   function filterByTagName(tagName) {
     $('.mv2').show();
     $('.mv2').each((index, elem) => {
-      console.log(index);
       if (!elem.hasAttribute(`data-${tagName}`)) {
         $(elem).hide();
       }
@@ -75,7 +74,8 @@
   //String to JSON
   function getQuery() {     
     var params = {};  
-    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
+    var url = decodeURI(window.location.search);//한글 쿼리 지원
+    url.replace(/[?&]+([^=&]+)=([^&]*)/gi, 
     	function(str, key, value) { 
         params[key] = value; 
       }

@@ -1,7 +1,7 @@
 ---
 title: Hello, world!
 date: 2022-01-03 19:03:00 +0900
-tags: [프로그래밍, 테스트]
+tags: [프로그래밍, test]
 ---
 
 # 개요
