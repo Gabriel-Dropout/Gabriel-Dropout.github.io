@@ -1,8 +1,9 @@
 ---
 title: Hello, world!
 date: 2022-01-03 19:03:00 +0900
-tags: [post, test]
+tags: [프로그래밍, 테스트]
 ---
+
 # 개요
 
 `hello world!`를 출력해봅시다
@@ -49,23 +50,3 @@ int main(){
 ---
 
 본 게시글은 Mark Text의 테스트를 위해 작성되었습니다.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
