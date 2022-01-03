@@ -192,25 +192,3 @@ Brainfuck 코드를 작성하다 보면 언제나 아스키 코드표를 찾아 
 **정작 백준에서 제공하는 인터프리터는 각 셀이 char형이 아니어서 이를 사용할 수 없었다.**
 
 아무튼...이렇게 brainfuck의 첫 번째 여행이 시작되었다.
-
-<style>
-table{
-  border-collapse: collapse;
-  text-align: left;
-  line-height: 1.5;
-  margin : 20px 10px;
-}
-table th {
-  width: 150px;
-  padding: 10px;
-  font-weight: bold;
-  vertical-align: top;
-  border: 1px solid #ccc;
-}
-table td {
-  width: 350px;
-  padding: 10px;
-  vertical-align: top;
-  border: 1px solid #ccc;
-}
-</style>
