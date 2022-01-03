@@ -4,6 +4,8 @@
 .top-50 { top: 50% }
 .link:hover { background: url(/images/line.png) repeat-x left bottom; }
 
+img {filter: drop-shadow(0px 0px 8px rgb(175, 175, 175)) }
+
 /* Markdown styles */
 .markdown-body a {
   text-decoration: none;
@@ -32,6 +34,7 @@
   padding-left: 3.8rem;
 }
 /* end Markdown styles */
+
 /* toc style */
 .toc {
   position: absolute;
