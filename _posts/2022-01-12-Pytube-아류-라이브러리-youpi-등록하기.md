@@ -243,6 +243,21 @@ pip install twine
 python -m twine upload dist/*
 ```
 
+
+
+### 테스트 업로드
+
+로컬 환경에서, pip로 설치한 것처럼 전역적으로 모듈을 불러올 수 있게 만든다.
+
+pyPI에 한 번 업로드한 버전은 재업로드가 불가능하므로 이 기능을 잘 활용해야겠다.
+
+```bash
+python setup.py develop
+python setup.py develop --uninstall
+```
+
+
+
 자세한 내용은 아래 링크를 참조하자.
 
 [여기!](https://suhwan.dev/2018/10/30/deep-dive-into-pip-2/)
