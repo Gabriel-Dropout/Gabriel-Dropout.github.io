@@ -1,5 +1,5 @@
 ---
-title: Innertube API 사용시 주의점: Client
+title: Innertube API 사용시 주의점
 date: 2022-01-12 22:28:00 +0900
 tags: [프로그래밍, 파이썬, 분석, 팁, API]
 ---
