@@ -12,6 +12,9 @@ links:
   - name:         Posts
     url:          /
     external:     false
+  - name:         Posts(YJH)
+    url:          /yjh
+    external:     false
   - name:         About me
     url:          /about
     external:     false
@@ -21,3 +24,8 @@ permalink:        /posts/:title
 defaults:
   - values:
       layout: "default"
+
+collections:
+  yjh:
+    output: true
+
