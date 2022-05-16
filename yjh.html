@@ -2,7 +2,7 @@
 ---
 
 <ul class="list pa0">
-  {% for post in site.yjh %}
+  {% for post in site.yjh reversed%}
   <li class="mv2"
     {% if post.tags %}
       {% for tag in post.tags %}
