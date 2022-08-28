@@ -1,5 +1,5 @@
 ---
-title: [wargame] opa 풀이
+title: wargame opa 풀이
 date: 2022-08-28 20:04:00 +0900
 tags: [웹해킹, 삽질]
 
