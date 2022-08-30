@@ -43,7 +43,7 @@ http://ubuntu32.goatskin.kr/crypto/opa
 
 __오라클 패딩 어택__ 이 사용된다. 사전 지식으로 __대칭키 암호화, CBC 블록 체인 모드__ 에 대한 지식도 필요하다.
 
-[opa란?]: https://bperhaps.tistory.com/entry/%EC%98%A4%EB%9D%BC%ED%81%B4-%ED%8C%A8%EB%94%A9-%EA%B3%B5%EA%B2%A9-%EA%B8%B0%EC%B4%88-%EC%84%A4%EB%AA%85-Oracle-Padding-Attack
+[opa란?] (https://bperhaps.tistory.com/entry/%EC%98%A4%EB%9D%BC%ED%81%B4-%ED%8C%A8%EB%94%A9-%EA%B3%B5%EA%B2%A9-%EA%B8%B0%EC%B4%88-%EC%84%A4%EB%AA%85-Oracle-Padding-Attack)
 
 ---
 
