@@ -1,5 +1,5 @@
 ---
-title: webasm test (feat.verlet)
+title: webasm test
 date: 2022-09-01 20:17:00 +0900
 tags: [test]
 
