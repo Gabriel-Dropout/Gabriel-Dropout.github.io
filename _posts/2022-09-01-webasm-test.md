@@ -1,7 +1,7 @@
 ---
-title: webasm test
+title: webasm test (feat.verlet)
 date: 2022-09-01 20:17:00 +0900
-tags: [test]
+tags: [test, raylib]
 
 ---
 

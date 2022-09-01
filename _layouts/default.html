@@ -31,11 +31,12 @@
           {% include toc.html html=content %}
         </div>
       {% endif %}
-      
+
+      <!--게시글 이동/본문 레이아웃 바깥에 위치-->
       {% if is_post %}
-        <!--게시글 이동/본문 레이아웃 바깥에 위치-->
         {% include pagination.html %}
-        
+      {% endif %}
+
       <main class="tl f6 relative pa4 pa5-ns overflow-hidden">
         <!-- 여기서부터 본문 -->
         {% if page.title %}
@@ -77,6 +78,7 @@
         {% if is_post %}{% include signoff.html %}{% endif %}
       </main>
       
+      {% if is_post %}
         <!--댓글-->
         <script src="https://utteranc.es/client.js"
           repo="Gabriel-Dropout/Gabriel-Dropout.github.io"
