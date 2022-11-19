@@ -90,7 +90,7 @@ MVVM이란 전체 로직을 **Model, View, VideModel**의 세 단위로 철저�
 
 다양한 MVVM 프레임워크를 사용하면 된다는 것 같지만 그러고 싶지는 않다. 간단한 해결법은 코드비하인드에서 다음과 같은 함수를 정의하는 것.
 
-```C#
+```c#
 private void UploadWithDrop(object sender, DragEventArgs e)
 {
     ((MainViewModel)DataContext).UploadWithDropExe(sender, e);
@@ -115,7 +115,7 @@ private void RemoveItem(object sender, System.EventArgs e)
 
 ### 애니메이션 스토리보드 제어
 
-```xaml
+```XAML
 <Path.Style>
     <Style TargetType="{x:Type Path}">
         <Setter Property="Data" Value="{StaticResource ProgressIcon}"/>
