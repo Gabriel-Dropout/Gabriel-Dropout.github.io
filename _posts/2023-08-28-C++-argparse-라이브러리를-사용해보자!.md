@@ -23,11 +23,11 @@ tags: [프로그래밍, C++, 라이브러리]
 
 * 단일 헤더 파일
 * **C++17** 필요
-* MIT 라이선스스
+* MIT 라이선스
 
 ## Quick Start
 
-**argparse.hpp** 헤더파일을 포함시키는 것으로 충분하다.
+**argparse.hpp** 헤더파일을 포함시키면 바로 사용할 수 있습니다!
 
 ```cpp
 #include <argparse/argparse.hpp>
@@ -58,7 +58,7 @@ program.add_argument("-v", "--verbose"); // parameter packing
 
 ### 위치 인수(Positional Arguments)
 
-**위치 인수**는 다음 예제처럼 사용할 수 있다.
+**위치 인수**는 입력 순서대로 할당되는 인수 유형이다. 다음 예제처럼 사용할 수 있다.
 
 ```cpp
 #include <argparse/argparse.hpp>
@@ -96,12 +96,12 @@ foo@bar:/home/dev/$ ./main 15
 무슨 일이 일어났는지 살펴보자:
 
 * 프로그램이 받을 명령줄 옵션을 지정하기 위해 `add_argument()` 함수가 사용되었다.
-* 기본적으로 명령줄 인자는 문자열로 해석된다. `.scan` 함수 체이닝을 통해 값을 정수로 변환했다.
+* 기본적으로 명령줄 인자는 문자열로 해석된다. `.scan()` 함수 체이닝을 통해 값을 정수로 변환했다.
 * 특정 인수의 값을 읽기 위해 `parser.get<T>(key)` 함수를 사용했다.
 
 ### 선택적 인수(Optional Arguments)
 
-이제 선택적 인수를 살펴 보자. 선택적 인자는 `-`나 `--`로 시작한다. 프로그램 실행 시 꼭 순서대로 배열할 필요 없이 아무 위치에나 들어갈 수 있는 인수이다.
+이제 선택적 인수를 살펴 보자. 선택적 인수는 `-`나 `--`로 시작한다. 명령어 입력 시 꼭 순서대로 배열할 필요 없이 아무 위치에나 들어갈 수 있는 인수이다.
 
 
 ```cpp
@@ -132,9 +132,9 @@ Verbosity enabled
 ```
 
 무슨 일이 일어났는지 살펴보자:
-* `--verbose` 인자가 주어졌을 때만 화면에 뭔가 출력하고 그렇지 않을 때는 아무 것도 출력하지 않는 프로그램이다.
+* `--verbose` 인수가 주어졌을 때만 화면에 뭔가 출력하고 그렇지 않을 때는 아무 것도 출력하지 않는 프로그램이다.
 * Since the argument is actually optional, no error is thrown when running the program without ```--verbose```. Note that by using ```.default_value(false)```, if the optional argument isn’t used, it's value is automatically set to false.
-* 실행 시 `--verbose` 인자를 명시하지 않아도 오류를 뱉지 않는다. `.default_value(false)`를 사용해 인수가 주어지지 않았을 때의 기본값을 설정했다.
+* 실행 시 `--verbose` 인수를 명시하지 않아도 오류를 뱉지 않는다. `.default_value(false)`를 사용해 인수가 주어지지 않았을 때의 기본값을 설정했다.
 * `.implicit_value(true)`를 사용해 이 옵션이 어떤 값을 저장하기보다는 플래그 역할로 사용되도록 명시했다. 값 없이 `--verbose`만 입력하면 자동으로 `true`로 설정된다.
 
 #### 선택적 인수 요구하기(Requiring optional arguments)
@@ -158,7 +158,7 @@ program.add_argument("-o", "--output")
   .help("specify the output file.");
 ```
 
-#### Accessing optional arguments without default values
+#### 기본값 없이 선택적 인수 안전하게 사용하기(Accessing optional arguments without default values)
 
 선택적 인수에 특별히 지정할 만한 기본값이 없지만 예외 처리를 하기는 싫다면 다음과 같이 사용할 수도 있다.
 
@@ -168,11 +168,11 @@ if (auto fn = program.present("-o")) {
 }
 ```
 
-`get`과 유사하게, `present` 메서드도 템플릿 인수를 사용할 수 있다. 그러나 `parser.present<T>(key)`은 `std::optional<T>`를 반환하여 사용자가 이 매개변수에 값을 지정하지 않으면 반환값이 `std::nullopt`가 된다.
+`get`과 유사하게, `present` 메서드도 템플릿으로 타입 지정이 가능하다. 그러나 `parser.present<T>(key)`은 `T` 대신 `std::optional<T>`를 반환하며, 사용자가 인수에 값을 지정하지 않았다면 값이 `std::nullopt`로 지정된다.
 
 #### 사용자가 직접 지정한 값인지 확인하기
 
-`default_value`를 가진 인수의 값을 사용자가 제공했는지 여부를 확인하려면 `argument.is_used()`를 이용하자.
+`default_value`를 가진 인수의 값을 사용자가 제공했는지, 혹은 기본값인지 여부를 확인하려면 `argument.is_used()`를 이용하자.
 
 ```cpp
 program.add_argument("--color")
@@ -218,7 +218,7 @@ auto colors = program.get<std::vector<std::string>>("--color");  // {"red", "gre
 
 #### 값을 증가시키기 위한 인수 반복
 
-더 큰 값을 표현하기 위해 인수를 반복하는 경우도 종종 있다.
+해당 인수가 몇 번 입력되었는지를 확인할 수도 있다.
 
 ```cpp
 int verbosity = 0;
@@ -236,7 +236,7 @@ std::cout << "verbose level: " << verbosity << std::endl;    // verbose level: 4
 
 ### 음수 표현
 
-알다시피 선택적 인수는 `-`로 시작한다. 다행히도 `argparse`는 음수를 잘 처리한다.
+알다시피 선택적 인수는 `-`로 시작한다. 이때문에 음수값 지정에 대해 걱정할 수 있는데, 다행히도 `argparse`는 음수를 잘 처리한다.
 
 ```cpp
 argparse::ArgumentParser program;
@@ -311,13 +311,9 @@ foo@bar:/home/dev/$ ./main --verbose 4
 The square of 4 is 16
 ```
 
----
-
-## 미번역 부분(수정 예정)
-
 ### 도움말 출력
 
-`std::cout << program` prints a help message, including the program usage and information about the arguments registered with the `ArgumentParser`. For the previous example, here's the default help message:
+`std::cout << program` 은 `ArgumentParser`에 등록된 정보를 바탕으로 프로그램 사용법을 출력합니다. 이전 예제 코드에 대한 기본 도움말은 다음과 같습니다:
 
 ```
 foo@bar:/home/dev/$ ./main --help
@@ -332,12 +328,12 @@ Optional arguments:
   --verbose
 ```
 
-You may also get the help message in string via `program.help().str()`.
+`program.help().str()`를 이용해 도움말 메시지를 스트링으로 읽을 수도 있습니다.
 
-#### Adding a description and an epilog to help
+#### 도움말에 설명 또는 에필로그 추가하기
 
-`ArgumentParser::add_description` will add text before the detailed argument
-information. `ArgumentParser::add_epilog` will add text after all other help output.
+`ArgumentParser::add_description`로 인수의 상세 설명 이전에 텍스트를 추가합니다.
+`ArgumentParser::add_epilog` 도움말 끝부분에 텍스트를 추가합니다.
 
 ```cpp
 #include <argparse/argparse.hpp>
@@ -374,9 +370,9 @@ Optional arguments:
 Possible things include betingalw, chiz, and res.
 ```
 
-### List of Arguments
+### 인수 리스트
 
-ArgumentParser objects usually associate a single command-line argument with a single action to be taken. The ```.nargs``` associates a different number of command-line arguments with a single action. When using ```nargs(N)```, N arguments from the command line will be gathered together into a list.
+`.nargs`를 사용해 한 종류의 인수에 여러 개의 값을 요구할 수 있습니다. `std::vector` 형식으로 읽어집니다.
 
 ```cpp
 argparse::ArgumentParser program("main");
@@ -397,13 +393,13 @@ catch (const std::runtime_error& err) {
 auto files = program.get<std::vector<std::string>>("--input_files");  // {"config.yml", "System.xml"}
 ```
 
-```ArgumentParser.get<T>()``` has specializations for ```std::vector``` and ```std::list```. So, the following variant, ```.get<std::list>```, will also work.
+```ArgumentParser.get<T>()``` 는 ```std::vector``` and ```std::list``` 각각에 대한 특수화를 제공합니다. 따라서 다음 예제처럼 ```.get<std::list>``` 또한 작동합니다.
 
 ```cpp
 auto files = program.get<std::list<std::string>>("--input_files");  // {"config.yml", "System.xml"}
 ```
 
-Using ```.scan```, one can quickly build a list of desired value types from command line arguments. Here's an example:
+```.scan```을 사용해 인수의 자료형을 원하는 형태로 전처리할 수 있습니다.
 
 ```cpp
 argparse::ArgumentParser program("main");
@@ -426,15 +422,16 @@ catch (const std::runtime_error& err) {
 auto query_point = program.get<std::vector<double>>("--query_point");  // {3.5, 4.7, 9.2}
 ```
 
-You can also make a variable length list of arguments with the ```.nargs```.
-Below are some examples.
+```.nargs```로 가변 개수의 값을 요구하는 인수를 설정할 수 있습니다.
+
+아래는 예시입니다.
 
 ```cpp
 program.add_argument("--input_files")
   .nargs(1, 3);  // This accepts 1 to 3 arguments.
 ```
 
-Some useful patterns are defined like "?", "*", "+" of argparse in Python.
+파이썬 argparse 모듈의 "?", "*", "+" 에 대응하는 유용한 패턴 또한 정의되어 있습니다.
 
 ```cpp
 program.add_argument("--input_files")
@@ -449,9 +446,11 @@ program.add_argument("--input_files")
   .nargs(argparse::nargs_pattern::optional);  // "?" in Python. This accepts an argument optionally.
 ```
 
-### Compound Arguments
+### 복합 인수
 
-Compound arguments are optional arguments that are combined and provided as a single argument. Example: ```ps -aux```
+복합 인수란 서로 결합되어 마치 하나의 인수처럼 사용될 수 있는 선택적 인수입니다.
+
+Ex)  ```ps -aux```
 
 ```cpp
 argparse::ArgumentParser program("test");
@@ -497,20 +496,20 @@ b = true
 c = {0.0, 0.0}
 ```
 
-Here's what's happening:
-* We have three optional arguments ```-a```, ```-b``` and ```-c```.
-* ```-a``` and ```-b``` are toggle arguments.
-* ```-c``` requires 2 floating point numbers from the command-line.
-* argparse can handle compound arguments, e.g., ```-abc``` or ```-bac``` or ```-cab```. This only works with short single-character argument names.
-  - ```-a``` and ```-b``` become true.
-  - argv is further parsed to identify the inputs mapped to ```-c```.
-  - If argparse cannot find any arguments to map to c, then c defaults to {0.0, 0.0} as defined by ```.default_value```
+무슨 일이 일어났는지 살펴보자:
+* 세 개의 선택적 인수 ```-a```, ```-b``` 그리고```-c```가 존재한다.
+* ```-a``` 와 ```-b``` 는 `.default_value`와 `.implicit_value`설정으로 인해 플래그처럼 사용된다.
+* ```-c``` 는 두 개의 부동 소수점 값을 요구한다.
+* argparse는 ```-abc``` or ```-bac``` or ```-cab```와 같은 복합 인수를 허용한다. 단, 단일 알파벳 인수 이름에만 적용된다.
+  - ```-a``` 와 ```-b``` 는 true로 설정된다.
+  - argv는 파싱되어 ```-c```가 요구하는 값을 찾는다.
+  - 만약 argparse가 c에 매핑된 값을 찾지 못하면, c는 `.default_value`에 정의된 대로 기본값 `{0.0, 0.0}`을 갖는다.
 
-### Converting to Numeric Types
+### 숫자 자료형으로 변환
 
-For inputs, users can express a primitive type for the value.
+사용자는 값을 기본 자료형으로 표현할 수 있습니다.
 
-The ```.scan<Shape, T>``` method attempts to convert the incoming `std::string` to `T` following the `Shape` conversion specifier. An `std::invalid_argument` or `std::range_error` exception is thrown for errors.
+`.scan<Shape, T>` 함수는 주어진 `std::string`을 `Shape` 변환 지시자를 통해 자료형 `T`로 변환하려고 시도합니다. 만약 이 과정에서 문제가 생긴다면 `std::invalid_argument` 또는 `std::range_error` 예외를 발생합니다.
 
 ```cpp
 program.add_argument("-x")
@@ -520,9 +519,9 @@ program.add_argument("scale")
        .scan<'g', double>();
 ```
 
-`Shape` specifies what the input "looks like", and the type template argument specifies the return value of the predefined action. Acceptable types are floating point (i.e float, double, long double) and integral (i.e. signed char, short, int, long, long long).
+`Shape`은 입력값이 어떻게 생겼는지를 지정하고 자료형 인자는 결과적으로 반환될 값의 자료형을 지정합니다. 허용되는 자료형은 부동 소수점(i.e float, double, long double) 과 정수형 (i.e. signed char, short, int, long, long long)입니다.
 
-The grammar follows `std::from_chars`, but does not exactly duplicate it. For example, hexadecimal numbers may begin with `0x` or `0X` and numbers with a leading zero may be handled as octal values.
+문법은 `std::from_chars`를 따르지만 똑같지는 않습니다. 예를 들어, 16진수는 `0x`나 `0X`로 시작할 수 있고 0으로 시작하는 숫자는 8진수로 해석될 수 있습니다.
 
 |   Shape    | interpretation                            |
 | :--------: | ----------------------------------------- |
@@ -537,11 +536,13 @@ The grammar follows `std::from_chars`, but does not exactly duplicate it. For ex
 |    'u'     | decimal (unsigned)                        |
 | 'x' or 'X' | hexadecimal (unsigned)                    |
 
-### Default Arguments
+### 사전 정의된 인수
 
-`argparse` provides predefined arguments and actions for `-h`/`--help` and `-v`/`--version`. By default, these actions will **exit** the program after displaying a help or version message, respectively. This exit does not call destructors, skipping clean-up of taken resources.
+`argparse` 는 미리 정의된 인수 `-h`/`--help` 와 `-v`/`--version`를 제공합니다. 기본적으로, 이 인수가 주어졌을 때 도움말 또는 버전 메시지를 출력하고 프로그램을 종료합니다. 이때 지금껏 할당된 리소스의 소멸자를 호출하는 과정은 생략됩니다.
 
-These default arguments can be disabled during `ArgumentParser` creation so that you can handle these arguments in your own way. (Note that a program name and version must be included when choosing default arguments.)
+`ArgumentParser`를 생성할 때 사전 정의된 인수를 비활성화할 수 있습니다.
+
+(기본 인수를 조정하기 위해 프로그램의 이름과 버전이 반드시 명시되어야 하는 점에 주목하세요.)
 
 ```cpp
 argparse::ArgumentParser program("test", "1.0", default_arguments::none);
@@ -556,25 +557,27 @@ program.add_argument("-h", "--help")
   .nargs(0);
 ```
 
-The above code snippet outputs a help message and continues to run. It does not support a `--version` argument.
+위의 코드는 도움말을 출력하고 프로그램을 계속 실행합니다. `--version`는 직접 정의하지 않았으므로 위 예제에서는 이 인수를 사용할 수 없습니다.
 
-The default is `default_arguments::all` for included arguments. No default arguments will be added with `default_arguments::none`. `default_arguments::help` and `default_arguments::version` will individually add `--help` and `--version`.
+기본값은 `default_arguments:all`입니다. 이외에 `default_arguments::none`. `default_arguments::help` 및 `default_arguments::version`를 사용할 수 있습니다.
 
-The default arguments can be used while disabling the default exit with these arguments. This forth argument to `ArgumentParser` (`exit_on_default_arguments`) is a bool flag with a default **true** value. The following call will retain `--help` and `--version`, but will not exit when those arguments are used.
+사전 정의된 인수(version, help)가 사용자로부터 입력되면 버전 또는 도움말을 출력한 뒤 프로그램을 종료합니다. `ArgumentParser`의 네 번째 인자를 설정해 이를 바꿀 수 있습니다. `exit_on_default_arguments`는 기본값이 **true**인 플래그 값입니다. 아래 코드에서는 사전 정의된 인수를 사용하지만 이것이 사용자로부터 입력되어도 프로그램을 계속 실행합니다.
 
 ```cpp
 argparse::ArgumentParser program("test", "1.0", default_arguments::all, false)
 ```
 
-### Gathering Remaining Arguments
+### 잔여 인수
 
-`argparse` supports gathering "remaining" arguments at the end of the command, e.g., for use in a compiler:
+`argparse` 는 명령어의 끝에 "남아 있는" 인수를 처리하는 기능을 지원합니다. 컴파일러 등에서 사용되곤 하는 방식입니다.
 
 ```console
 foo@bar:/home/dev/$ compiler file1 file2 file3
 ```
 
 To enable this, simply create an argument and mark it as `remaining`. All remaining arguments passed to argparse are gathered here.
+
+이를 활설화하기 위해 인수를 정의하고 `remaining`으로 설정해두세요. `std::vector<std::string>`컨테이너에 잔여 인수를 저장합니다.
 
 ```cpp
 argparse::ArgumentParser program("compiler");
@@ -601,14 +604,14 @@ try {
 }
 ```
 
-When no arguments are provided:
+위 예제에서, 인수를 지정하지 않았을 때는 다음과 같은 결과가 나타납니다.
 
 ```console
 foo@bar:/home/dev/$ ./compiler
 No files provided
 ```
 
-and when multiple arguments are provided:
+인수에 여러 값이 할당되었을 때는 다음과 같습니다.
 
 ```console
 foo@bar:/home/dev/$ ./compiler foo.txt bar.txt baz.txt
@@ -618,7 +621,7 @@ bar.txt
 baz.txt
 ```
 
-The process of gathering remaining arguments plays nicely with optional arguments too:
+잔여 인수는 선택적 인수와 함께 사용해도 잘 작동합니다.
 
 ```cpp
 argparse::ArgumentParser program("compiler");
@@ -661,7 +664,7 @@ bar.cpp
 baz.cpp
 ```
 
-***NOTE***: Remember to place all optional arguments BEFORE the remaining argument. If the optional argument is placed after the remaining arguments, it too will be deemed remaining:
+***NOTE***: 선택적 인수가 명령어 내에서 비교적 위치 선정이 자유롭다고는 하지만, 반드시 잔여 인수의 앞에 위치해야 합니다. 선택적 인수를 잔여 인수의 뒤에 지정하려고 하면 그냥 잔여 인수로 취급됩니다. 아래 예시를 보세요.
 
 ```console
 foo@bar:/home/dev/$ ./compiler foo.cpp bar.cpp baz.cpp -o main
@@ -673,202 +676,21 @@ baz.cpp
 main
 ```
 
-### Parent Parsers
+---
 
-A parser may use arguments that could be used by other parsers.
-
-These shared arguments can be added to a parser which is then used as a "parent" for parsers which also need those arguments. One or more parent parsers may be added to a parser with `.add_parents`. The positional and optional arguments in each parent is added to the child parser.
-
-```cpp
-argparse::ArgumentParser surface_parser("surface", 1.0, argparse::default_arguments::none);
-parent_parser.add_argument("--area")
-  .default_value(0)
-  .scan<'i', int>();
-
-argparse::ArgumentParser floor_parser("floor");
-floor_parser.add_argument("tile_size").scan<'i', int>();
-floor_parser.add_parents(surface_parser);
-floor_parser.parse_args({ "./main", "--area", "200", "12" });  // --area = 200, tile_size = 12
-
-argparse::ArgumentParser ceiling_parser("ceiling");
-ceiling_parser.add_argument("--color");
-ceiling_parser.add_parents(surface_parser);
-ceiling_parser.parse_args({ "./main", "--color", "gray" });  // --area = 0, --color = "gray"
-```
-
-Changes made to parents after they are added to a parser are not reflected in any child parsers. Completely initialize parent parsers before adding them to a parser.
-
-Each parser will have the standard set of default arguments. Disable the default arguments in parent parsers to avoid duplicate help output.
-
-### Subcommands
-
-Many programs split up their functionality into a number of sub-commands, for example, the `git` program can invoke sub-commands like `git checkout`, `git add`, and `git commit`. Splitting up functionality this way can be a particularly good idea when a program performs several different functions which require different kinds of command-line arguments. `ArgumentParser` supports the creation of such sub-commands with the `add_subparser()` member function.
-
-```cpp
-#include <argparse/argparse.hpp>
-
-int main(int argc, char *argv[]) {
-  argparse::ArgumentParser program("git");
-
-  // git add subparser
-  argparse::ArgumentParser add_command("add");
-  add_command.add_description("Add file contents to the index");
-  add_command.add_argument("files")
-    .help("Files to add content from. Fileglobs (e.g.  *.c) can be given to add all matching files.")
-    .remaining();
-
-  // git commit subparser
-  argparse::ArgumentParser commit_command("commit");
-  commit_command.add_description("Record changes to the repository");
-  commit_command.add_argument("-a", "--all")
-    .help("Tell the command to automatically stage files that have been modified and deleted.")
-    .default_value(false)
-    .implicit_value(true);
-
-  commit_command.add_argument("-m", "--message")
-    .help("Use the given <msg> as the commit message.");
-
-  // git cat-file subparser
-  argparse::ArgumentParser catfile_command("cat-file");
-  catfile_command.add_description("Provide content or type and size information for repository objects");
-  catfile_command.add_argument("-t")
-    .help("Instead of the content, show the object type identified by <object>.");
-
-  catfile_command.add_argument("-p")
-    .help("Pretty-print the contents of <object> based on its type.");
-
-  // git submodule subparser
-  argparse::ArgumentParser submodule_command("submodule");
-  submodule_command.add_description("Initialize, update or inspect submodules");
-  argparse::ArgumentParser submodule_update_command("update");
-  submodule_update_command.add_description("Update the registered submodules to match what the superproject expects");
-  submodule_update_command.add_argument("--init")
-    .default_value(false)
-    .implicit_value(true);
-  submodule_update_command.add_argument("--recursive")
-    .default_value(false)
-    .implicit_value(true);
-  submodule_command.add_subparser(submodule_update_command);
-
-  program.add_subparser(add_command);
-  program.add_subparser(commit_command);
-  program.add_subparser(catfile_command);
-  program.add_subparser(submodule_command);
-
-  try {
-    program.parse_args(argc, argv);
-  }
-  catch (const std::runtime_error& err) {
-    std::cerr << err.what() << std::endl;
-    std::cerr << program;
-    return 1;
-  }
-
-  // Use arguments
-}
-```
-
-```console
-foo@bar:/home/dev/$ ./git --help
-Usage: git [-h] {add,cat-file,commit,submodule}
-
-Optional arguments:
-  -h, --help   	shows help message and exits
-  -v, --version	prints version information and exits
-
-Subcommands:
-  add           Add file contents to the index
-  cat-file      Provide content or type and size information for repository objects
-  commit        Record changes to the repository
-  submodule     Initialize, update or inspect submodules
-
-foo@bar:/home/dev/$ ./git add --help
-Usage: add [-h] files
-
-Add file contents to the index
-
-Positional arguments:
-  files        	Files to add content from. Fileglobs (e.g.  *.c) can be given to add all matching files.
-
-Optional arguments:
-  -h, --help   	shows help message and exits
-  -v, --version	prints version information and exits
-
-foo@bar:/home/dev/$ ./git commit --help
-Usage: commit [-h] [--all] [--message VAR]
-
-Record changes to the repository
-
-Optional arguments:
-  -h, --help   	shows help message and exits
-  -v, --version	prints version information and exits
-  -a, --all    	Tell the command to automatically stage files that have been modified and deleted.
-  -m, --message	Use the given <msg> as the commit message.
-
-foo@bar:/home/dev/$ ./git submodule --help
-Usage: submodule [-h] {update}
-
-Initialize, update or inspect submodules
-
-Optional arguments:
-  -h, --help   	shows help message and exits
-  -v, --version	prints version information and exits
-
-Subcommands:
-  update        Update the registered submodules to match what the superproject expects
-```
-
-When a help message is requested from a subparser, only the help for that particular parser will be printed. The help message will not include parent parser or sibling parser messages.
-
-Additionally, every parser has the `.is_subcommand_used("<command_name>")` and `.is_subcommand_used(subparser)` member functions to check if a subcommand was used. 
-
-### Getting Argument and Subparser Instances
-
-```Argument``` and ```ArgumentParser``` instances added to an ```ArgumentParser``` can be retrieved with ```.at<T>()```. The default return type is ```Argument```.
-
-```cpp
-argparse::ArgumentParser program("test");
-
-program.add_argument("--dir");
-program.at("--dir").default_value(std::string("/home/user"));
-
-program.add_subparser(argparse::ArgumentParser{"walk"});
-program.at<argparse::ArgumentParser>("walk").add_argument("depth");
-```
-
-### Parse Known Args
-
-Sometimes a program may only parse a few of the command-line arguments, passing the remaining arguments on to another script or program. In these cases, the `parse_known_args()` function can be useful. It works much like `parse_args()` except that it does not produce an error when extra arguments are present. Instead, it returns a list of remaining argument strings.
-
-```cpp
-#include <argparse/argparse.hpp>
-#include <cassert>
-
-int main(int argc, char *argv[]) {
-  argparse::ArgumentParser program("test");
-  program.add_argument("--foo").implicit_value(true).default_value(false);
-  program.add_argument("bar");
-
-  auto unknown_args =
-    program.parse_known_args({"test", "--foo", "--badger", "BAR", "spam"});
-
-  assert(program.get<bool>("--foo") == true);
-  assert(program.get<std::string>("bar") == std::string{"BAR"});
-  assert((unknown_args == std::vector<std::string>{"--badger", "spam"}));
-}
-```
-
-### ArgumentParser in bool Context
+### ArgumentParser의 bool 값
 
 An `ArgumentParser` is `false` until it (or one of its subparsers) have extracted
 known value(s) with `.parse_args` or `.parse_known_args`. When using `.parse_known_args`,
 unknown arguments will not make a parser `true`.
 
-### Custom Prefix Characters
+`ArgumentParser`는 `.parse_args`나 `.parse_known_args`를 이용해 값을 추출하기 전까지 `false`값을 가집니다. `.parse_known_args`를 사용했지만 어떠한 값도 파싱하지 못한 경우에도 여전히 `false`를 유지합니다.
 
-Most command-line options will use `-` as the prefix, e.g. `-f/--foo`. Parsers that need to support different or additional prefix characters, e.g. for options like `+f` or `/foo`, may specify them using the `set_prefix_chars()`.
+### 커스텀 접두사
 
-The default prefix character is `-`.
+대부분의 명령줄 옵션은 `-`를 접두사로 사용합니다. 그러나 `argparse`는 커스텀 접두사를 설정하는 기능을 제공합니다. `set_prefix_chars()`를 이용합니다.
+
+당연히 기본 설정값은 `-` 입니다.
 
 ```cpp
 #include <argparse/argparse.hpp>
@@ -912,11 +734,11 @@ foo@bar:/home/dev/$ ./main +f 5 --bar 3.14f /foo "Hello"
 /foo  : Hello
 ```
 
-### Custom Assignment Characters 
+### 커스텀 할당 문자 
 
-In addition to prefix characters, custom 'assign' characters can be set. This setting is used to allow invocations like `./test --foo=Foo /B:Bar`.
+접두 문자 뿐만 아니라, '할당 문자' 또한 지정할 수 있습니다. `./test --foo=FOO /B:Bar`와 같이 사용하도록 설정할 수 있습니다.
 
-The default assign character is `=`.
+기본 할당 문자는 `=`입니다.
 
 ```cpp
 #include <argparse/argparse.hpp>
@@ -955,9 +777,11 @@ foo@bar:/home/dev/$ ./main --foo=Foo /B:Bar
 /B    : Bar
 ```
 
-## Further Examples
+---
 
-### Construct a JSON object from a filename argument
+## 심화 예제
+
+### filename 인수를 받아 JSON 객체 구성하기
 
 ```cpp
 argparse::ArgumentParser program("json_test");
@@ -983,7 +807,7 @@ catch (const std::runtime_error& err) {
 nlohmann::json config = program.get<nlohmann::json>("config");
 ```
 
-### Positional Arguments with Compound Toggle Arguments
+### 위치 인수와 복합 토글 인수 함께 사용하기
 
 ```cpp
 argparse::ArgumentParser program("test");
@@ -1034,7 +858,7 @@ c = {3.14, 2.718}
 files = {"a.txt", "b.txt", "c.txt"}
 ```
 
-### Restricting the set of values for an argument
+### 인수에 할당 가능한 값의 종류 제한하기
 
 ```cpp
 argparse::ArgumentParser program("test");
@@ -1067,7 +891,7 @@ foo@bar:/home/dev/$ ./main fex
 baz
 ```
 
-## Using `option=value` syntax
+## `option=value` 문법 사용하기
 
 ```cpp
 #include "argparse.hpp"
@@ -1102,3 +926,9 @@ foo@bar:/home/dev/$ ./test --bar=BAR --foo
 --foo: true
 --bar: BAR
 ```
+
+---
+
+## 설명하지 않은 기능들
+
+이외에 argparse에 구현되어 있지만 설명하지 않은 기능으로 Parent Parsers, Subcommands, Known Args Pasring이 있다. 추후 이것들을 사용하게 되면 그때 정리하는 게 나을 듯.
